@@ -36,6 +36,8 @@ public interface FilterInterface {
                 return new Interval(filter);
             case "UNEQUAL":
                 return new Unequal(filter);
+            case "OLDER_THAN":
+                return new OlderThan(filter);
             default:
                 throw new IllegalArgumentException();
         }

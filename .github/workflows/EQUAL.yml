@@ -1,4 +1,4 @@
-name: 'PROD Docker Image'
+name: 'EQUAL Docker Image'
 
 on:
   push:

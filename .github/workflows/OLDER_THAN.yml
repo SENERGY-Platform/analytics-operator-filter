@@ -1,4 +1,4 @@
-name: 'ALL Docker Image'
+name: 'OLDER_THAN Docker Image'
 
 on:
   push:
@@ -31,9 +31,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile_ALL
+          file: ./Dockerfile_UNEQUAL
           platforms: linux/amd64
           push: true
           tags: |
-            smartenergyplatform/analytics-operator-filter:all
-            ghcr.io/senergy-platform/analytics-operator-filter:all
+            smartenergyplatform/analytics-operator-filter:older-than
+            ghcr.io/senergy-platform/analytics-operator-filter:older-than
