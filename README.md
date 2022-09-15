@@ -21,3 +21,4 @@ Filters values
 | equal       | a             | equal    |
 | interval    | [-3,8)        | interval |
 | unequal     | a             | unequal  |
+| older-than  | 1h            | unequal  |
