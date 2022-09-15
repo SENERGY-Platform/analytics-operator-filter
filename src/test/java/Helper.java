@@ -60,8 +60,7 @@ public class Helper {
         }
     }
 
-    protected static void test(String configuredValue, Object actualValue, boolean expectedToTrigger) throws Exception {
-
+    protected static MessageModel test(String configuredValue, Object actualValue, boolean expectedToTrigger) throws Exception {
         Map<String, Object> conf = new JSONHelper().parseFile("config.json");
         JSONObject filterConfig = new JSONObject();
         filterConfig.put("filter", configuredValue);
@@ -69,7 +68,7 @@ public class Helper {
         Config config = new Config(((JSONObject) conf).toJSONString());
         ConfigProvider.setConfig(config);
 
-        Filter op = new Filter(FilterInterface.create(config));
+        Filter op = new Filter(FilterInterface.create(config), config);
         MessageModel model = new MessageModel();
         Message message = new Message();
         op.configMessage(message);
@@ -82,5 +81,6 @@ public class Helper {
         message.setMessage(model);
         op.run(message);
         Assert.assertEquals(model.getOutputMessage().getAnalytics().containsKey("value"), expectedToTrigger);
+        return model;
     }
 }

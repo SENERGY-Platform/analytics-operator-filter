@@ -24,9 +24,8 @@ public class Operator {
 
     public static void main(String[] args) throws Exception {
         Config config = ConfigProvider.getConfig();
-
-        BaseOperator op = new Filter(FilterInterface.create(config));
-        Stream stream  = new Stream();
+        BaseOperator op = new Filter(FilterInterface.create(config), config);
+        Stream stream = new Stream();
         stream.start(op);
     }
 }

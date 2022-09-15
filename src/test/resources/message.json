@@ -2,7 +2,9 @@
   "device_id": "1",
   "value": {
     "reading": {
-      "value": null
+      "value": null,
+      "anotherValue": 1,
+      "yetAnotherValue": "foo"
     }
   }
 }

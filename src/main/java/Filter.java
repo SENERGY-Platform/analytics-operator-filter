@@ -16,25 +16,40 @@
 
 
 import filters.FilterInterface;
+import org.infai.ses.senergy.models.InputTopicModel;
+import org.infai.ses.senergy.models.MappingModel;
 import org.infai.ses.senergy.operators.BaseOperator;
-import org.infai.ses.senergy.operators.FlexInput;
+import org.infai.ses.senergy.operators.Config;
 import org.infai.ses.senergy.operators.Message;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Filter extends BaseOperator {
 
     final FilterInterface filter;
+    final String[] inputs;
 
-    Filter(FilterInterface filter) {
+    Filter(FilterInterface filter, Config config) {
         this.filter = filter;
+        Map<String, Boolean> inputs = new HashMap<>();
+        for (InputTopicModel inputTopicModel : config.getInputTopicsConfigs()) {
+            for (MappingModel mapping : inputTopicModel.getMappings()) {
+                inputs.put(mapping.getDest(), false);
+            }
+        }
+        this.inputs = inputs.keySet().toArray(new String[0]);
     }
 
     public void run(Message message) {
-        try{
-            Object input = message.getFlexInput("value").getValue(Object.class);
-            if (filter.triggers(input)) {
-                message.output("value", input);
+        try {
+            Object value = message.getFlexInput("value").getValue(Object.class);
+            if (filter.triggers(value)) {
+                for (String input : inputs) {
+                    message.output(input, message.getFlexInput(input).getValue(Object.class));
+                }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -42,7 +57,9 @@ public class Filter extends BaseOperator {
 
     @Override
     public Message configMessage(Message message) {
-        message.addFlexInput("value");
-        return  message;
+        for (String input : inputs) {
+            message.addFlexInput(input);
+        }
+        return message;
     }
 }

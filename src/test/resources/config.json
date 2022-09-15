@@ -12,6 +12,14 @@
         {
           "Dest": "value",
           "Source": "value.reading.value"
+        },
+        {
+          "Dest": "anotherValue",
+          "Source": "value.reading.anotherValue"
+        },
+        {
+          "Dest": "yetAnotherValue",
+          "Source": "value.reading.yetAnotherValue"
         }
       ]
     }
